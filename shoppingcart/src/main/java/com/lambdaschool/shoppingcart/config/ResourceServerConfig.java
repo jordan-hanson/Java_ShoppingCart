@@ -25,7 +25,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/h2-console/**")
+                .antMatchers("/", "/h2-console/**",
+                        "/swagger-resources/**",
+                        "/swagger-resource/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**",
+                        "/createnewuser")
                 .permitAll()
                 .antMatchers("/roles/**")
                 .hasAnyRole("ADMIN")
@@ -37,5 +43,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+        http.logout().disable();
     }
 }

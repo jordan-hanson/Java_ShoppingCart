@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@Service(value = "securityUserService");
+@Service(value = "securityUserService")
 public class SecurityUserServiceImpl implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
          if (user == null){
              throw new ResourceNotFoundException("Invalid username or password");
